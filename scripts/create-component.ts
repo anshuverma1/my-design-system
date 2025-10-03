@@ -63,6 +63,7 @@ export const Default: Story = {
   [`${componentName}.test.tsx`]: `
 import React from "react";
 import { render, screen } from "@testing-library/react";
+import '@testing-library/jest-dom';
 import ${componentName} from "./${componentName}";
 
 test("renders ${componentName}", () => {
