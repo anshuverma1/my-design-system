@@ -1,6 +1,9 @@
-const path = require("path");
+import path from "path";
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-module.exports = {
+export default {
   entry: "./src/index.ts",
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -14,6 +17,9 @@ module.exports = {
   mode: "production",
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
+    alias: {
+      "@styles": path.resolve(__dirname, "src/styles"),
+    },
   },
   externals: {
     react: "react",
@@ -28,7 +34,18 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: [
+          "style-loader",
+          "css-loader",
+          {
+            loader: "sass-loader",
+            options: {
+              sassOptions: {
+                includePaths: [path.resolve(__dirname, "src")],
+              },
+            },
+          },
+        ],
       },
     ],
   },
